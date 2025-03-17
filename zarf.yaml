@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/zarf-dev/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: zarf-package-fluxcd
+  version: v0.0.0
+  source: https://github.com/a1994sc/zarf-package-fluxcd
+  annotations:
+    org.opencontainers.image.source: "https://github.com/a1994sc/zarf-package-fluxcd"
+    org.opencontainers.image.description: Zarf package for deploying fluxcd
+components:
+  - name: fluxcd
+    manifests:
+      - name: fluxcd
+        namespace: flux-system
+        kustomizations:
+          - ./.
+    images:
+      - ghcr.io/fluxcd/helm-controller:v1.1.0
+      - ghcr.io/fluxcd/kustomize-controller:v1.4.0
+      - ghcr.io/fluxcd/notification-controller:v1.4.0
+      - ghcr.io/fluxcd/source-controller:v1.4.1
