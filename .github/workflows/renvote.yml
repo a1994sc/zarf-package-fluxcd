@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure gitsign
-        uses: chainguard-dev/actions/setup-gitsign@58b5d1b6769b7e88dfa5c85bbc81a5a02eaca5bc # main
+        uses: chainguard-dev/actions/setup-gitsign@a2ff80dd945a15cfcaff6c8f3bf48dbf499981d5 # main
 
       - name: Install tools
         uses: ./.github/actions/install-tools
