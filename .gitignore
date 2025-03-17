@@ -7,6 +7,9 @@ decompress
 *.tmp.*
 *.tgz
 
+# hack artifacts
+checksums.txt
+
 # ignore nix config directories/files
 /result*
 .direnv
