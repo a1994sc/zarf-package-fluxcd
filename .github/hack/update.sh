@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 readarray resourceMap < <(yq -o=j -I=0 '.projects[]' .github/hack/resources.json)
 
 for resource in "${resourceMap[@]}"; do
