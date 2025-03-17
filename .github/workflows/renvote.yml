@@ -1,0 +1,42 @@
+---
+name: Populate Renovate resources
+on:
+  push:
+    branches:
+      - "renovate/**"
+permissions:
+  contents: write
+  id-token: write # needed for keyless signing
+jobs:
+  resources:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'renovate[bot]' }}
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Configure gitsign
+        uses: chainguard-dev/actions/setup-gitsign@58b5d1b6769b7e88dfa5c85bbc81a5a02eaca5bc # main
+
+      - name: Install tools
+        uses: ./.github/actions/install-tools
+
+      - name: Update checksum
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |-
+          ./.github/hack/update.sh
+
+          ./.github/hack/zarf.sh
+
+          # git push if we have a diff
+          if [[ `git status --porcelain=1 | wc -l` -ne 0 ]]; then
+            git add .
+            git config --global user.email "<29139614+renovate[bot]@users.noreply.github.com>"
+            git config --global user.name "renovate[bot]"
+            git commit -am "chore(resources): updated resources files"
+            git push origin ${{ github.ref_name }}
+          fi
