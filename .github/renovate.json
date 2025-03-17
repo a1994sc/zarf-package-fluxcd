@@ -12,6 +12,19 @@
     {
       "customType": "regex",
       "description": [
+        "Regex for resource.json hack"
+      ],
+      "fileMatch": [
+        "(^|/).github/hack/resources\\.json"
+      ],
+      "matchStrings": [
+        "\"renovate\": \"datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\",\\n.+?: ?.*\"(?<currentValue>\\S+?)\""
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "description": [
         "Process custom dependencies"
       ],
       "fileMatch": [
