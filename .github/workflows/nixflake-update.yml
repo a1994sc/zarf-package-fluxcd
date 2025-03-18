@@ -13,27 +13,27 @@ jobs:
       pull-requests: write
       id-token: write
     steps:
-    - name: Checkout
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
-    - name: Configure git
-      run: |
-        git config user.name "$GITHUB_ACTOR"
-        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Configure git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-    - name: Setup gitsign
-      uses: chainguard-dev/actions/setup-gitsign@a2ff80dd945a15cfcaff6c8f3bf48dbf499981d5 # main
+      - name: Setup gitsign
+        uses: chainguard-dev/actions/setup-gitsign@a2ff80dd945a15cfcaff6c8f3bf48dbf499981d5 # main
 
-    - name: Install nix
-      uses: DeterminateSystems/nix-installer-action@e50d5f73bfe71c2dd0aa4218de8f4afa59f8f81d # v16
+      - name: Install nix
+        uses: DeterminateSystems/nix-installer-action@e50d5f73bfe71c2dd0aa4218de8f4afa59f8f81d # v16
 
-    - name: Update flake
-      run: |
-        nix flake update
+      - name: Update flake
+        run: |
+          nix flake update
 
-    - name: Commit & Push changes
-      uses: actions-js/push@5a7cbd780d82c0c937b5977586e641b2fd94acc5 # v1.5
-      with:
-        branch: 'main'
-        message: "chore(flake): bump inputs"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit & Push changes
+        uses: actions-js/push@5a7cbd780d82c0c937b5977586e641b2fd94acc5 # v1.5
+        with:
+          branch: 'main'
+          message: "chore(flake): bump inputs"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
