@@ -41,3 +41,40 @@ jobs:
             git commit -am "chore(resources): updated resources files"
             git push origin ${{ github.ref_name }}
           fi
+
+  test-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Install tools
+        uses: ./.github/actions/install-tools
+
+      - name: Start oci registry
+        working-directory: .github/hack
+        run: |
+          docker-compose -f docker-compose.yml up -d
+
+      - name: Package Zarf package, amd64
+        run: |-
+          zarf package create --confirm . --architecture amd64
+
+      - name: Publish Zarf package, amd64
+        run: |-
+          zarf package publish zarf-*-amd64-*.zst oci://localhost:5202/${{ github.repository_owner }}
+
+      - name: Package Zarf package, arm64
+        run: |-
+          zarf package create --confirm . --architecture arm64
+
+      - name: Publish Zarf package, amd64
+        run: |-
+          zarf package publish zarf-*-arm64-*.zst oci://localhost:5202/${{ github.repository_owner }}
+
+      - name: Publish Zarf package, skeleton
+        run: |-
+          zarf package publish . oci://localhost:5202/${{ github.repository_owner }}
