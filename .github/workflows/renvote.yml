@@ -57,7 +57,7 @@ jobs:
       - name: Start oci registry
         working-directory: .github/hack
         run: |
-          docker-compose -f docker-compose.yml up -d
+          docker compose -f docker-compose.yml up -d
 
       - name: Package Zarf package, amd64
         run: |-
