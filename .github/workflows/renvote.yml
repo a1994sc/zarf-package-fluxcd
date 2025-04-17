@@ -39,7 +39,7 @@ jobs:
             git config --global user.email "<29139614+renovate[bot]@users.noreply.github.com>"
             git config --global user.name "renovate[bot]"
             git commit -am "chore(resources): updated resources files"
-            git push origin ${{ github.ref_name }}
+            git push origin HEAD:${{ github.head_ref }}
           fi
 
   test-publish:
@@ -65,7 +65,7 @@ jobs:
 
       - name: Publish Zarf package, amd64
         run: |-
-          zarf package publish zarf-*-amd64-*.zst oci://localhost:5202/${{ github.repository_owner }}
+          zarf package publish zarf-*-amd64-*.zst oci://localhost:5202/${{ github.repository_owner }} --plain-http
 
       - name: Package Zarf package, arm64
         run: |-
@@ -73,8 +73,8 @@ jobs:
 
       - name: Publish Zarf package, amd64
         run: |-
-          zarf package publish zarf-*-arm64-*.zst oci://localhost:5202/${{ github.repository_owner }}
+          zarf package publish zarf-*-arm64-*.zst oci://localhost:5202/${{ github.repository_owner }} --plain-http
 
       - name: Publish Zarf package, skeleton
         run: |-
-          zarf package publish . oci://localhost:5202/${{ github.repository_owner }}
+          zarf package publish . oci://localhost:5202/${{ github.repository_owner }} --plain-http
