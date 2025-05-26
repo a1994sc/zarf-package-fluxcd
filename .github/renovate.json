@@ -7,6 +7,17 @@
   "assignees": [
     "@A1994SC"
   ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "*"
+      ],
+      "automerge": true
+    }
+  ],
   "dependencyDashboard": true,
   "customManagers": [
     {
