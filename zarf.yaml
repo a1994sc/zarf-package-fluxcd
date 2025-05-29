@@ -16,7 +16,7 @@ components:
         kustomizations:
           - ./.
     images:
-      - ghcr.io/fluxcd/helm-controller:v1.2.0
-      - ghcr.io/fluxcd/kustomize-controller:v1.5.1
-      - ghcr.io/fluxcd/notification-controller:v1.5.0
-      - ghcr.io/fluxcd/source-controller:v1.5.0
+      - ghcr.io/fluxcd/helm-controller:v1.3.0
+      - ghcr.io/fluxcd/kustomize-controller:v1.6.0
+      - ghcr.io/fluxcd/notification-controller:v1.6.0
+      - ghcr.io/fluxcd/source-controller:v1.6.0
